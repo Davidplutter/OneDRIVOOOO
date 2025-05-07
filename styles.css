@@ -50,7 +50,6 @@
 }
 
 /* === EXISTING STYLES UNCHANGED BELOW === */
-
 * {
   margin: 0;
   padding: 0;
@@ -305,4 +304,58 @@ body {
   font-size: 12px;
   margin-top: 12px;
   color: #aaa;
+}
+
+/* === MOBILE RESPONSIVE STYLES === */
+@media (max-width: 768px) {
+  .container {
+    flex-direction: column;
+  }
+
+  .sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .main-panel {
+    padding: 10px;
+  }
+
+  .file {
+    width: 45%;
+  }
+
+  .toolbar {
+    flex-wrap: wrap;
+  }
+
+  .toolbar-btn {
+    flex: 1 1 45%;
+    margin-bottom: 10px;
+  }
+
+  .sign-in-modal {
+    width: 90%;
+  }
+}
+
+@media (max-width: 480px) {
+  .file {
+    width: 100%;
+  }
+
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .search, .filter {
+    width: 100%;
+    margin-top: 10px;
+  }
+
+  .toolbar-btn {
+    width: 100%;
+  }
 }
