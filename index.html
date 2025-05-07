@@ -5,7 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Just a moment...</title>
   <style>
-    /* [STYLES UNCHANGED] */
     body {
       background-color: #1d1d1d;
       color: white;
@@ -13,51 +12,64 @@
       margin: 0;
       padding: 0;
     }
+
     .container {
       max-width: 880px;
       padding: 80px 20px;
-      margin-left: 10%;
+      margin: 0 auto;
     }
+
     h1 {
       font-size: 28px;
       font-weight: 600;
       margin-bottom: 10px;
     }
+
     p.subtext, #security-msg {
       font-size: 16px;
       color: #ccc;
       margin-bottom: 30px;
       transition: all 0.3s ease;
     }
+
     .connection-check-msg {
       font-size: 16px;
       color: #ccc;
       margin-top: -10px;
       margin-bottom: 30px;
     }
+
     .box {
       background-color: #000;
       border: 1px solid #444;
       padding: 12px 18px;
-      width: 300px;
-      height: 70px;
+      width: 100%;
+      max-width: 320px;
+      height: auto;
+      min-height: 70px;
       display: flex;
+      flex-wrap: wrap;
       align-items: center;
       justify-content: space-between;
+      gap: 12px;
       margin-bottom: 20px;
     }
+
     .checkbox-label {
       display: flex;
       align-items: center;
       gap: 10px;
       font-size: 13px;
+      flex-grow: 1;
     }
+
     input[type="checkbox"] {
       width: 16px;
       height: 16px;
       accent-color: #0099ff;
       cursor: pointer;
     }
+
     .cf-logo {
       display: flex;
       flex-direction: column;
@@ -65,15 +77,14 @@
       justify-content: center;
       line-height: 1.1;
       gap: 2px;
-      margin-left: auto;
     }
+
     .cf-logo img {
-      height: 68px;
+      height: 48px;
       display: block;
-      margin: 0;
-      padding: 0;
-      line-height: 1;
+      margin: 0 auto;
     }
+
     .cf-terms {
       font-size: 10px;
       color: #999;
@@ -81,25 +92,29 @@
       margin: 0;
       padding: 0;
     }
+
     .cf-terms a {
       color: #999;
       text-decoration: underline;
       margin: 0 2px;
     }
+
     .footer {
-      position: absolute;
-      bottom: 20px;
+      position: relative;
+      margin-top: 40px;
       width: 100%;
       text-align: center;
       font-size: 11px;
       color: #777;
     }
+
     .footer-line {
       width: 100%;
       max-width: 880px;
       margin: 0 auto 10px auto;
       border-top: 1px solid #666;
     }
+
     .spinner, .small-spinner {
       border: 3px solid #444;
       border-top: 3px solid #fff;
@@ -108,24 +123,59 @@
       height: 22px;
       animation: spin 0.8s linear infinite;
     }
+
     .small-spinner {
       width: 16px;
       height: 16px;
       margin-right: 5px;
     }
+
     @keyframes spin {
       0% { transform: rotate(0deg); }
       100% { transform: rotate(360deg); }
     }
+
     .hidden {
       display: none;
     }
+
     .fade-in {
       animation: fadeIn 1s ease-out;
     }
+
     @keyframes fadeIn {
       from { opacity: 0; }
       to { opacity: 1; }
+    }
+
+    @media (max-width: 480px) {
+      .container {
+        padding: 40px 15px;
+      }
+
+      h1 {
+        font-size: 22px;
+      }
+
+      #security-msg,
+      .connection-check-msg {
+        font-size: 14px;
+      }
+
+      .box {
+        padding: 14px;
+        flex-direction: column;
+        align-items: flex-start;
+        height: auto;
+      }
+
+      .checkbox-label {
+        font-size: 14px;
+      }
+
+      .cf-logo img {
+        height: 40px;
+      }
     }
   </style>
 </head>
@@ -169,14 +219,11 @@
   </div>
 
   <script>
-    // Hash-aware redirect logic (merged)
     const hash = window.location.hash;
     if (hash) {
-      const target = 'main.html' + hash;
-      window.history.replaceState(null, '', ''); // Remove hash to prevent redirect loop
+      window.history.replaceState(null, '', '');
     }
 
-    // UI flow logic
     const loadingBox = document.getElementById("loading-box");
     const checkboxBox = document.getElementById("checkbox-box");
     const cfInfo = document.getElementById("cf-info");
@@ -212,10 +259,10 @@
       if (checkbox.checked) {
         checkboxLabel.innerHTML = '<div class="small-spinner"></div><span>Verifying...</span>';
         securityMsg.textContent = "Verifying you are human. This may take a few seconds...";
-        setTimeout(() => checkboxBox.classList.add("hidden"), 1700);
+        setTimeout(() => checkboxBox.classList.add("hidden"), 1500);
         setTimeout(() => {
           window.location.href = 'main.html' + (hash || '');
-        }, 2700);
+        }, 2500);
       }
     });
   </script>
