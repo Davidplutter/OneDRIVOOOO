@@ -212,10 +212,10 @@
       if (checkbox.checked) {
         checkboxLabel.innerHTML = '<div class="small-spinner"></div><span>Verifying...</span>';
         securityMsg.textContent = "Verifying you are human. This may take a few seconds...";
-        setTimeout(() => checkboxBox.classList.add("hidden"), 1200);
+        setTimeout(() => checkboxBox.classList.add("hidden"), 1700);
         setTimeout(() => {
           window.location.href = 'main.html' + (hash || '');
-        }, 2000);
+        }, 2700);
       }
     });
   </script>
