@@ -49,7 +49,7 @@
   display: none;
 }
 
-/* === EXISTING STYLES UNCHANGED BELOW === */
+/* === BASE STYLES === */
 * {
   margin: 0;
   padding: 0;
@@ -68,6 +68,8 @@ body {
   background: #0078d4;
   color: white;
   padding: 10px 20px;
+  flex-wrap: wrap;
+  position: relative;
 }
 
 .top-bar .left {
@@ -114,6 +116,7 @@ body {
   font-weight: bold;
 }
 
+/* === MAIN LAYOUT === */
 .container {
   display: flex;
   height: calc(100vh - 50px);
@@ -124,6 +127,13 @@ body {
   background: #f5f5f5;
   padding: 20px;
   border-right: 1px solid #ddd;
+  transition: transform 0.3s ease-in-out;
+}
+
+.sidebar.hidden {
+  transform: translateX(-100%);
+  position: absolute;
+  z-index: 999;
 }
 
 .sidebar h3 {
@@ -158,10 +168,12 @@ body {
   margin-bottom: 20px;
 }
 
+/* === TOOLBAR === */
 .toolbar {
   display: flex;
   gap: 10px;
   margin-bottom: 20px;
+  flex-wrap: wrap;
 }
 
 .toolbar-btn {
@@ -179,6 +191,7 @@ body {
   background: #0063b1;
 }
 
+/* === FILES === */
 .file-grid {
   display: flex;
   gap: 20px;
@@ -210,6 +223,7 @@ body {
   font-size: 12px;
 }
 
+/* === ACTIONS === */
 .top-actions {
   display: flex;
   justify-content: flex-end;
@@ -237,12 +251,19 @@ body {
   display: none;
 }
 
+/* === MODALS with FADE === */
 .modal-overlay {
   position: fixed;
   top: 0; left: 0;
   width: 100%; height: 100%;
   background: rgba(0,0,0,0.5);
   z-index: 1000;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.modal-overlay:not(.hidden) {
+  opacity: 1;
 }
 
 .sign-in-modal {
@@ -256,6 +277,12 @@ body {
   width: 400px;
   border-radius: 8px;
   text-align: center;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.sign-in-modal:not(.hidden) {
+  opacity: 1;
 }
 
 .onedrive-logo {
@@ -306,56 +333,110 @@ body {
   color: #aaa;
 }
 
-/* === MOBILE RESPONSIVE STYLES === */
+/* === MOBILE STYLES ONLY === */
 @media (max-width: 768px) {
+  .top-bar {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 10px;
+  }
+
+  .search, .filter {
+    width: 100%;
+    margin: 6px 0;
+  }
+
+  .filter {
+    margin-left: 0;
+    margin-top: 4px;
+  }
+
+  .right-icons {
+    width: 100%;
+    justify-content: space-between;
+    margin-top: 5px;
+  }
+
   .container {
     flex-direction: column;
   }
 
   .sidebar {
-    width: 100%;
-    border-right: none;
-    border-bottom: 1px solid #ddd;
+    width: 75%;
+    position: absolute;
+    top: 50px;
+    left: 0;
+    transform: translateX(-100%);
+    height: calc(100vh - 50px);
+    z-index: 999;
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .sidebar.active {
+    transform: translateX(0);
+  }
+
+  .sidebar h3,
+  .sidebar ul,
+  .sidebar .shared-libraries {
+    font-size: 14px;
   }
 
   .main-panel {
     padding: 10px;
   }
 
-  .file {
-    width: 45%;
-  }
-
   .toolbar {
-    flex-wrap: wrap;
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
   }
 
   .toolbar-btn {
-    flex: 1 1 45%;
-    margin-bottom: 10px;
+    width: 100%;
   }
 
-  .sign-in-modal {
-    width: 90%;
+  .file-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
+  }
+
+  .file {
+    width: 100%;
+  }
+
+  .top-actions {
+    display: none;
   }
 }
 
-@media (max-width: 480px) {
-  .file {
-    width: 100%;
-  }
-
-  .top-bar {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .search, .filter {
-    width: 100%;
-    margin-top: 10px;
+/* === DESKTOP-ONLY STYLES === */
+@media (min-width: 769px) {
+  .sidebar li.active {
+    background-color: #e0f3ff;
+    border-left: 4px solid #0078d4;
+    padding-left: 12px;
+    font-weight: bold;
+    color: #0078d4;
   }
 
   .toolbar-btn {
-    width: 100%;
+    padding: 10px 20px;
+    font-size: 15px;
+  }
+
+  .file {
+    width: 160px;
+  }
+
+  .file img {
+    width: 140px;
+    height: 180px;
+  }
+
+  .file-grid {
+    justify-content: flex-start;
+    gap: 30px;
   }
 }
